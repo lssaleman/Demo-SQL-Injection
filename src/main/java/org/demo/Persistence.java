@@ -10,7 +10,7 @@ public class Persistence {
         String sql = "SELECT * " +
                 "FROM UserData u " +
                 "JOIN BankData bd ON u.user_id = bd.user_id " +
-                "WHERE nutzername = " + username + " AND passwort = " + password;
+                "WHERE nutzername = '" + username + "' AND passwort = '" + password + "'";
 
         try (Connection conn = DriverManager.getConnection(URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

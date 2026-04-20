@@ -2,8 +2,8 @@
 - `mvn clean javafx:run`
 
 ## Injection
-- Benutzername: `' or (1=1)`
-- Passwort: `' or (1=1)`
+- Benutzername: `' or '1' ='1`
+- Passwort: `' or '1' ='1`
 
 ## Gültige Eingaben
 
