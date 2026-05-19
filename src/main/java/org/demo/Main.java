@@ -10,18 +10,23 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Main extends Application {
+    int fieldHeight = 30;
     @Override
     public void start(Stage stage) {
         TextField usernameField = new TextField();
         usernameField.setPromptText("Benutzername");
+        usernameField.setStyle("-fx-font-size: 20px;");
+        usernameField.setPrefHeight(fieldHeight);
 
         PasswordField passwordField = new PasswordField();
         passwordField.setPromptText("Passwort");
+        passwordField.setStyle("-fx-font-size: 20px;");
+        passwordField.setPrefHeight(fieldHeight);
 
         VBox root = getVBox(usernameField, passwordField);
         root.setPadding(new Insets(20));
 
-        Scene scene = new Scene(root, 500, 700);
+        Scene scene = new Scene(root, 1000, 700);
 
         stage.setTitle("Login");
         stage.setScene(scene);
@@ -30,19 +35,27 @@ public class Main extends Application {
 
     private static VBox getVBox(TextField usernameField, PasswordField passwordField) {
         Button loginButton = new Button("Login");
-        Label messageLabel = new Label();
+        loginButton.setStyle("-fx-font-size: 20px;");
+        loginButton.setPrefHeight(30);
+        loginButton.setPrefWidth(200);
+        TextArea messageArea = new TextArea();
+        messageArea.setStyle("-fx-font-size: 22px;");
+        messageArea.setWrapText(true);
+        messageArea.setEditable(false);
+
+        messageArea.setPrefHeight(500);
 
         loginButton.setOnAction(e -> {
             String username = usernameField.getText();
             String password = passwordField.getText();
 
             if (username.isEmpty() || password.isEmpty()) {
-                messageLabel.setText("Bitte alle Felder ausfüllen!");
+                messageArea.setText("Bitte alle Felder ausfüllen!");
             } else {
                 Persistence persistence = new Persistence();
                 ArrayList<UserDTO> dtos = persistence.getUserData(username, password);
                 if (dtos == null || dtos.isEmpty()) {
-                    messageLabel.setText("Ungültige Anmeldedaten");
+                    messageArea.setText("Ungültige Anmeldedaten");
                 } else {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (UserDTO dto : dtos) {
@@ -53,12 +66,13 @@ public class Main extends Application {
                                 .append("PIN: ").append(dto.getPin()).append("\n")
                                 .append("---------------------------------\n");
                     }
-                    messageLabel.setText(stringBuilder.toString());
+                    messageArea.setText(stringBuilder.toString());
                 }
             }
         });
+        loginButton.setDefaultButton(true);
 
-        return new VBox(10, usernameField, passwordField, loginButton, messageLabel);
+        return new VBox(10, usernameField, passwordField, loginButton, messageArea);
     }
 
     public static void main(String[] args) {
