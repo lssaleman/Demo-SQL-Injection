@@ -1,7 +1,3 @@
-### TO-DOS für Lucas 🚨
-- größere Schrift
-- Enter um Benutzername/Passwort abzusenden
-
 ## Startup
 - `mvn clean javafx:run`
 
